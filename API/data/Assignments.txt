@@ -7,12 +7,12 @@ BD
 Max
 PIE2
 Max
-TEOI 
+TEOI
 Max
 AP3
 Max
 SIS
-Javier 
+Javier
 MAG
 Javier
 Physics
@@ -30,4 +30,11 @@ Maria
 Physics
 Maria
 PRO2
- 
+M.Balsells
+Algorithms
+M.Balsells
+Electronics
+M.Balsells
+Databases
+M.Balsells
+Statistics
