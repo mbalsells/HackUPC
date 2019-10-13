@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" style="height:90px;">
-  <img src="assets/img/grasp-logo.png" height="100px">
+  <img (click)="mainer()" src="assets/img/grasp-logo.png" height="100px">
   <span class="spacer-small"></span>
-  <span class="main-title">Grasp</span>
+  <span (click)="mainer()" class="main-title">Grasp</span>
   <span class="spacer"></span>
   <span class="spacer-small"></span>
   <button mat-icon-button (click)="communityClicked()">

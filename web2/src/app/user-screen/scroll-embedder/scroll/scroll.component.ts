@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HTTPLessonService, FeedbackResponse, InfoUserResponse, ScheduleResponse } from '../../httplesson.service'
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-scroll',
@@ -16,7 +17,10 @@ export class ScrollComponent implements OnInit {
   it = 0;
   n = 5;
 
-  constructor(private less: HTTPLessonService) {}
+  constructor(
+    private less: HTTPLessonService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
     var _this = this;
@@ -46,5 +50,8 @@ export class ScrollComponent implements OnInit {
   }
   prop(i: number, e: any) {
     this.prod[i] = e.value;
+  }
+  community() {
+    this.router.navigateByUrl("community/"+this.username);
   }
 }
