@@ -23,4 +23,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/community/' + this.username);
   }
 
+  mainer() {
+    this.router.navigateByUrl('/user/' + this.username);  
+  }
 }

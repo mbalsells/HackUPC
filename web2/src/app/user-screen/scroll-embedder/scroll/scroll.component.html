@@ -10,7 +10,9 @@
             <ng-container *ngIf="it <= i && i < it+3">
                 <mat-card>
                     <mat-card-header>
-                        <mat-card-title>{{ this.cards[i] }}</mat-card-title>
+                        <mat-card-title>{{ this.cards[i] }}  
+                            <span *ngIf="this.votes[i]!=0"> ({{this.votes[i]}}) </span>
+                        </mat-card-title>
                     </mat-card-header>
                     <mat-card-actions *ngIf="this.votes[i]!=0">
                         <div class="container">
@@ -21,7 +23,7 @@
                             <span class="vertical">Change your rating</span>
                             </span>
                             <span class="right-span">
-                                <button mat-icon-button  color="primary" aria-label="Person icon-button">
+                                <button (click)="community()" mat-icon-button  color="primary" aria-label="Person icon-button">
                                     <mat-icon class="icon-small">emoji_people</mat-icon>
                                 </button>
                                 <span class="vertical">Volunteer to help your classmates</span>
