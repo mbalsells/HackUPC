@@ -10,12 +10,12 @@ import {Router} from '@angular/router';
 export class ScrollComponent implements OnInit {
   @Input() username: string;
 
-  prod = [0, 0, 0, 0, 0];
-  ITER = [0, 1, 2, 3, 4];
-  cards = ["Algorithms", "Complex analysis", "Linear Optimization", "Parametrized Complexity", "Theory"];
-  votes = [0,             5,                    9,                    3,                        5];
+  prod = [];
+  ITER = [];
+  cards = [];
+  votes = [];
   it = 0;
-  n = 5;
+  n = 0;
 
   constructor(
     private less: HTTPLessonService,
@@ -31,6 +31,7 @@ export class ScrollComponent implements OnInit {
       _this.prod = Array(_this.n).fill(0);
       _this.ITER = Array.from(Array(_this.n).keys());
     });
+    console.log(this.ITER);
   }
 
   expandLess() {
