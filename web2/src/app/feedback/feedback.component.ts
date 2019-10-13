@@ -17,7 +17,7 @@ export class FeedbackComponent implements OnInit {
   ngOnInit() {
     this.username = this.actRoute.snapshot.paramMap.get("username");
     var _this = this;
-    this.less.infoUser(username).subscribe(data => {
+    this.less.infoUser(this.username).subscribe(data => {
       _this.subject = data.subject;
       _this.feedback = data.feedback;
     });

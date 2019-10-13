@@ -12,8 +12,8 @@ export interface InfoUserResponse {
   username: string;
   name: string;
   email: string;
-  subjects: string[];
-  feedbacks: number[];
+  subject: string[];
+  feedback: number[];
 }
 
 export interface FeedbackResponse {
@@ -47,7 +47,7 @@ export class HTTPLessonService {
     return this.http.get<FeedbackResponse>('http://localhost:8080/sendfeedback', {
       params: {
         username: _username,
-        points: _points,
+        point: _points,
         subjectName: _assig,
       }
     });

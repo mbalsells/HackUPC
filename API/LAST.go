@@ -1,17 +1,16 @@
 package main
 
 import (
-    // "fmt"
-    "time"
-    "sort"
-    "bufio"
+	// "fmt"
+	"bufio"
 	"encoding/json"
 	"errors"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
+	"time"
 )
-
 
 // given a file (named fileName) and a text, inserts the text in the file with end of line
 func add(fileName, text string) error {
@@ -123,99 +122,96 @@ func register(w http.ResponseWriter, req *http.Request) {
 	w.Write(value)
 }
 
-
 // this was login and register
 
 type clock struct {
-    hour int
-    min int
+	hour int
+	min  int
 }
 
 type lesson struct {
-    subject         string
-    start_time      clock
-    end_time        clock
-    feedback        [11]int
+	subject    string
+	start_time clock
+	end_time   clock
+	feedback   [11]int
 }
 
 type almost_lesson struct {
-    subject         string
-    start_time      clock
-    end_time        clock
+	subject    string
+	start_time clock
+	end_time   clock
 }
 
-func Newalmost_Lesson (l lesson) almost_lesson {
-    _l := almost_lesson {l.subject, l.start_time, l.end_time}
-    return _l
+func Newalmost_Lesson(l lesson) almost_lesson {
+	_l := almost_lesson{l.subject, l.start_time, l.end_time}
+	return _l
 }
 
-func min_lesson (l1, l2 lesson) lesson {
-    if leq(l1.start_time, l2.start_time) {
-        return l1
-    }
-    return l2
+func min_lesson(l1, l2 lesson) lesson {
+	if leq(l1.start_time, l2.start_time) {
+		return l1
+	}
+	return l2
 }
 
-func NewLesson (subject string, start_time, end_time clock) lesson {
+func NewLesson(subject string, start_time, end_time clock) lesson {
 	var _empty [11]int
-    l := lesson {subject, start_time, end_time, _empty}
-    return l
+	l := lesson{subject, start_time, end_time, _empty}
+	return l
 }
 
 func NewClock(hour, min int) clock {
-    t := clock {hour, min}
-    return t
+	t := clock{hour, min}
+	return t
 }
 
 func less(a, b clock) bool {
-    return (a.hour < b.hour) || (a.hour == b.hour && a.min < b.min)
+	return (a.hour < b.hour) || (a.hour == b.hour && a.min < b.min)
 }
 
 func greater(a, b clock) bool {
-    return less(b, a)
+	return less(b, a)
 }
 
 func leq(a, b clock) bool {
-    return less(a, b) || a == b
+	return less(a, b) || a == b
 }
 
 func geq(a, b clock) bool {
-    return leq(b, a)
+	return leq(b, a)
 }
 
 type subject struct {
-    name string
-    teacher string
-    schedule [7]lesson
+	name     string
+	teacher  string
+	schedule [7]lesson
 }
 
-func NewSubject (name, teacher string, schedule [7] lesson) subject {
-    s := subject {name, teacher, schedule}
-    return s
+func NewSubject(name, teacher string, schedule [7]lesson) subject {
+	s := subject{name, teacher, schedule}
+	return s
 }
 
 type user struct {
-    username string
-    email string
-    name string
-    subjects [] string
-    feedback [] int
+	username string
+	email    string
+	name     string
+	subjects []string
+	feedback []int
 }
 
-func NewUser (username, name, email string, subjects []string) user {
+func NewUser(username, name, email string, subjects []string) user {
 	var _zeroes []int
-	for _, _ = range subjects{
+	for _, _ = range subjects {
 		_zeroes = append(_zeroes, 0)
 	}
 
-    u := user {username, name, email, subjects, _zeroes}
-    return u
+	u := user{username, name, email, subjects, _zeroes}
+	return u
 }
-
 
 var map_subjects map[string]subject
 var map_users map[string]user
-
 
 func performset_feedback(u user, pointsstring string, subject_name string) {
 	points, _ := strconv.Atoi(pointsstring)
@@ -230,34 +226,31 @@ func performset_feedback(u user, pointsstring string, subject_name string) {
 			u.feedback[i] = points
 			//fmt.Println("now u , ", u)
 
-		    if x == subject_name {
-		    	for j, y := range map_subjects {
-		            if y.name == subject_name {
-		            	temp := map_subjects[j]
-		            	temp.schedule[today].feedback[points]++
-		                map_subjects[j] = temp
-		            }
-		        }
-		    }
+			if x == subject_name {
+				for j, y := range map_subjects {
+					if y.name == subject_name {
+						temp := map_subjects[j]
+						temp.schedule[today].feedback[points]++
+						map_subjects[j] = temp
+					}
+				}
+			}
 		}
 	}
 }
 
-func getInfoUser (u string) (map[string][]string, bool) {
+func getInfoUser(u string) (map[string][]string, bool) {
 	_user, err := map_users[u]
 
-	var m map[string] []string
+	var m map[string][]string
 	m = make(map[string][]string)
 
-
-
-	m["username"] = [] string {_user.username}
-	m["name"] = [] string {_user.name}
-	m["email"] = [] string {_user.email}
+	m["username"] = []string{_user.username}
+	m["name"] = []string{_user.name}
+	m["email"] = []string{_user.email}
 	m["subject"] = _user.subjects
 
-	var feed [] string
-
+	var feed []string
 
 	for _, v := range _user.feedback {
 		feed = append(feed, strconv.Itoa(v))
@@ -268,40 +261,39 @@ func getInfoUser (u string) (map[string][]string, bool) {
 	return m, err
 }
 
-
 func performSchedule(u user) []almost_lesson {
-    var ans []almost_lesson
-    today := (int(time.Now().Weekday()) + 6) % 7
-    for _, name := range u.subjects {
-        _subject := map_subjects[name]
-        
-        x := _subject.schedule[today]
-        if x.start_time.hour > 0 {
-            ans = append(ans, Newalmost_Lesson(x))
-        }
-    }
+	var ans []almost_lesson
+	today := (int(time.Now().Weekday()) + 6) % 7
+	for _, name := range u.subjects {
+		_subject := map_subjects[name]
 
-    sort.Slice(ans, func(i, j int) bool {
-        x := ans[i].start_time
-        y := ans[j].start_time
-        return less(x, y)
-        })
+		x := _subject.schedule[today]
+		if x.start_time.hour > 0 {
+			ans = append(ans, Newalmost_Lesson(x))
+		}
+	}
 
-    return ans
+	sort.Slice(ans, func(i, j int) bool {
+		x := ans[i].start_time
+		y := ans[j].start_time
+		return less(x, y)
+	})
+
+	return ans
 }
-
 
 func setfeedback(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
-	
+
 	performset_feedback(map_users[req.Form["username"][0]], req.Form["point"][0], req.Form["subjectName"][0])
 
 	var m map[string]string
-	m  = make(map[string]string)
+	m = make(map[string]string)
 
 	m["result"] = "true"
 	value, _ := json.Marshal(m)
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
@@ -314,16 +306,15 @@ func schedule(w http.ResponseWriter, req *http.Request) {
 	var _subject []string
 	var _start_time []string
 	var _end_time []string
-	 
+
 	for _, val := range result {
 		_subject = append(_subject, val.subject)
-		_start_time = append(_start_time, strconv.Itoa(val.start_time.hour) + ":" + strconv.Itoa(val.start_time.min))
-		_end_time = append(_end_time, strconv.Itoa(val.end_time.hour) + ":" + strconv.Itoa(val.end_time.min))
+		_start_time = append(_start_time, strconv.Itoa(val.start_time.hour)+":"+strconv.Itoa(val.start_time.min))
+		_end_time = append(_end_time, strconv.Itoa(val.end_time.hour)+":"+strconv.Itoa(val.end_time.min))
 	}
 
-
-	var m map[string] []string
-	m  = make(map[string] []string)
+	var m map[string][]string
+	m = make(map[string][]string)
 
 	m["subject"] = _subject
 	m["start_time"] = _start_time
@@ -331,17 +322,17 @@ func schedule(w http.ResponseWriter, req *http.Request) {
 
 	value, _ := json.Marshal(m)
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
 
-
-func getaverage (subject_name string) float64{
+func getaverage(subject_name string) float64 {
 	count := 0
 	sum := 0
 
 	for _, v := range map_users {
-		for i, sub := range v.subjects{
+		for i, sub := range v.subjects {
 			if sub == subject_name && v.feedback[i] > 0 {
 				count++
 				sum += v.feedback[i]
@@ -355,22 +346,22 @@ func getaverage (subject_name string) float64{
 	if count == 0 {
 		return 0
 	} else {
-		return num/den
+		return num / den
 	}
 }
-
 
 func average(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	result := getaverage(req.Form["subjectName"][0])
 
 	var m map[string]string
-	m  = make(map[string]string)
+	m = make(map[string]string)
 
 	m["result"] = strconv.FormatFloat(result, 'f', 6, 64)
 
 	value, _ := json.Marshal(m)
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
@@ -381,10 +372,10 @@ func infouser(w http.ResponseWriter, req *http.Request) {
 	result, _ := getInfoUser(req.Form["username"][0])
 	value, _ := json.Marshal(result)
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
-
 
 // SetupHandlers initiates the servers HTTP endpoints
 func SetupHandlers() {
@@ -397,9 +388,9 @@ func SetupHandlers() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func init_everything () error {
-	map_subjects = make (map[string]subject)
-	map_users = make (map[string]user)
+func init_everything() error {
+	map_subjects = make(map[string]subject)
+	map_users = make(map[string]user)
 
 	filesUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
@@ -430,12 +421,11 @@ func init_everything () error {
 		_username := ScannerUsernames.Text()
 		_name := ScannerNames.Text()
 		_email := ScannerEmails.Text()
-		
 
 		var _empty []string
 		map_users[_username] = NewUser(_username, _name, _email, _empty)
 	}
-	
+
 	filesAssignments, err := os.OpenFile("data/Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
@@ -443,7 +433,7 @@ func init_everything () error {
 	defer filesAssignments.Close()
 
 	ScannerAssignments := bufio.NewScanner(filesAssignments)
-	
+
 	for ScannerAssignments.Scan() { // cheks that the username is not taken
 		_username := ScannerAssignments.Text()
 		ScannerAssignments.Scan()
@@ -462,17 +452,16 @@ func init_everything () error {
 	defer filesSubject.Close()
 
 	ScannerSubject := bufio.NewScanner(filesSubject)
-	
+
 	for ScannerSubject.Scan() { // cheks that the username is not taken
 		_assignment := ScannerSubject.Text()
 		ScannerSubject.Scan()
 		_teacher := ScannerSubject.Text()
-		
+
 		var _empty [7]lesson
 		map_subjects[_assignment] = NewSubject(_assignment, _teacher, _empty)
 	}
 
-	
 	filesSchedules, err := os.OpenFile("data/schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
@@ -480,7 +469,7 @@ func init_everything () error {
 	defer filesSchedules.Close()
 
 	ScannerSchedules := bufio.NewScanner(filesSchedules)
-	
+
 	for ScannerSchedules.Scan() { // cheks that the username is not taken
 		_assignment := ScannerSchedules.Text()
 		ScannerSchedules.Scan()
@@ -495,17 +484,17 @@ func init_everything () error {
 		_endm := ScannerSchedules.Text()
 
 		temp_subject := map_subjects[_assignment]
-		
-		int_starth, _ := strconv.Atoi(_starth) 
-		int_startm, _ := strconv.Atoi(_startm) 
-		int_endh, _ := strconv.Atoi(_endh) 
-		int_endm, _ := strconv.Atoi(_endm) 
-		int_day, _ := strconv.Atoi(_day) 
+
+		int_starth, _ := strconv.Atoi(_starth)
+		int_startm, _ := strconv.Atoi(_startm)
+		int_endh, _ := strconv.Atoi(_endh)
+		int_endm, _ := strconv.Atoi(_endm)
+		int_day, _ := strconv.Atoi(_day)
 
 		tmp_less := NewLesson(_assignment, NewClock(int_starth, int_startm), NewClock(int_endh, int_endm))
 
 		temp_subject.schedule[int_day] = tmp_less
-		map_subjects[_assignment] = temp_subject		
+		map_subjects[_assignment] = temp_subject
 	}
 
 	return errors.New("Everything okay :)")
@@ -515,5 +504,3 @@ func main() {
 	init_everything()
 	SetupHandlers()
 }
-
-
