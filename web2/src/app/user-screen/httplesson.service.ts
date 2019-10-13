@@ -20,6 +20,12 @@ export interface FeedbackResponse {
   success: boolean;
 }
 
+export interface AverageResponse {
+  average_me: string;
+  average_all: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +54,15 @@ export class HTTPLessonService {
       params: {
         username: _username,
         point: _points,
+        subjectName: _assig,
+      }
+    });
+  }
+
+  average(_username: string, _assig: string): Observable<AverageResponse> {
+    return this.http.get<AverageResponse>('http://localhost:8080/average', {
+      params: {
+        username: _username,
         subjectName: _assig,
       }
     });

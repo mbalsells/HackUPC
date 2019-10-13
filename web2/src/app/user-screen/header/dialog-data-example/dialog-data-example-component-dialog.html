@@ -7,7 +7,7 @@
   <li *ngFor="let s of subject; let i = index" [attr.data-index]="i">
     {{s}}: 
     <span *ngIf="feedback[i]!=0">{{feedback[i]}}</span>
-    <span *ngIf="feedback[i]==0">Unranked</span>
+    <span *ngIf="feedback[i]==0">Unrated</span>
   </li>
 </ul>
 

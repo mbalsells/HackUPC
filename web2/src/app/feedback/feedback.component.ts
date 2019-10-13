@@ -11,6 +11,8 @@ export class FeedbackComponent implements OnInit {
   username = "";
   subject = [];
   feedback = [];
+  average_me = [];
+  average_all = [];
 
   constructor(private less : HTTPLessonService, private actRoute: ActivatedRoute) { }
 
@@ -20,7 +22,12 @@ export class FeedbackComponent implements OnInit {
     this.less.infoUser(this.username).subscribe(data => {
       _this.subject = data.subject;
       _this.feedback = data.feedback;
+      for (var i=0; i<this.subject.length; i++) {
+        this.less.average(this.username, this.subject[i]).subscribe(data => {
+          _this.average_me.push(data.average_me);
+          _this.average_all.push(data.average_all);
+        });
+      }
     });
   }
-
 }

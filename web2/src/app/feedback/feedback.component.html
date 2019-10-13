@@ -3,20 +3,26 @@
 <mat-card class="rating-log">
   <mat-card-title class="rating-title">Your week's ratings log</mat-card-title>
 
-  <mat-list>
-
-    <mat-list-item *ngFor="let sub of subject; let i = index" [attr.data-index]="i">
-      {{sub}} - {{feedback[i]}}
-    </mat-list-item>
-
-  </mat-list>
+  <ul>
+    <li *ngFor="let sub of subject; let i = index" [attr.data-index]="i">
+      {{sub}}: 
+      <span *ngIf="feedback[i]==0"> Unrated</span>
+      <span *ngIf="feedback[i]!=0"> {{feedback[i]}}</span>
+    </li>
+  </ul>
 </mat-card>
 
 <mat-card class="rating-stats">
-  <mat-card-title class="rating-title">Your subjects rating stats</mat-card-title>
-  <mat-list role="list">
-    <mat-list-item role="listitem">Item 1</mat-list-item>
-    <mat-list-item role="listitem">Item 2</mat-list-item>
-    <mat-list-item role="listitem">Item 3</mat-list-item>
-  </mat-list>
+  <mat-card-title class="rating-title">Your average rating vs your classmates' average</mat-card-title>
+  <ul>
+    <li *ngFor="let sub of subject; let i = index" [attr.data-index]="i">
+      {{sub}}:
+      <span *ngIf="average_me[i]==0">Unrated</span>
+      <span *ngIf="average_me[i]!=0">{{average_me[i]}}</span>
+      ,
+      <span *ngIf="average_all[i]==0">Unrated</span>
+      <span *ngIf="average_all[i]!=0">{{average_all[i]}}</span>
+    </li>
+
+  </ul>
 </mat-card>
