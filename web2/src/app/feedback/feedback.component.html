@@ -6,12 +6,10 @@
   <mat-list>
 
     <mat-list-item *ngFor="let sub of subject; let i = index" [attr.data-index]="i">
-      <p> {{sub}} </p>
-      <p> {{feedback[i]}} </p>
+      {{sub}} - {{feedback[i]}}
     </mat-list-item>
 
   </mat-list>
-
 </mat-card>
 
 <mat-card class="rating-stats">

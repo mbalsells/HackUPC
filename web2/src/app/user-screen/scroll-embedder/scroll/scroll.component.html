@@ -26,7 +26,12 @@
                                 <button (click)="community()" mat-icon-button  color="primary" aria-label="Person icon-button">
                                     <mat-icon class="icon-small">emoji_people</mat-icon>
                                 </button>
-                                <span class="vertical">Volunteer to help your classmates</span>
+                                <ng-container *ngIf="votes[i] >= 7">
+                                    <span class="vertical">Volunteer to help your classmates</span>
+                                </ng-container>
+                                <ng-container *ngIf="votes[i] < 7">
+                                    <span class="vertical">Ask your classmates for help</span>
+                                </ng-container>
                             </span>
                         </div>
                     </mat-card-actions>
@@ -40,7 +45,7 @@
                             color="primary"
                         ></mat-slider>
                         <button (click)="vote(i)" class="vote-button" mat-raised-button color="primary"> Vote </button>
-                    </mat-card-actions>
+                        </mat-card-actions>
                 </mat-card>
             </ng-container>
         </tr>
