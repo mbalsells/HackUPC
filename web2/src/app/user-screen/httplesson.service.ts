@@ -44,7 +44,7 @@ export class HTTPLessonService {
 
   sendFeedback(_username: string, _punt: number, _assig: string): Observable<FeedbackResponse> {
     var _points = _punt as any as string;
-    return this.http.get<FeedbackResponse>('http://localhost:8080/sendfeedback', {
+    return this.http.get<FeedbackResponse>('http://localhost:8080/setfeedback', {
       params: {
         username: _username,
         point: _points,
