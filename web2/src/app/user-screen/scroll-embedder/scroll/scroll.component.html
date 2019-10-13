@@ -8,7 +8,38 @@
     <ng-container *ngFor="let i of ITER;">
         <tr>
             <ng-container *ngIf="it <= i && i < it+3">
-                <app-scroll-card [lesson]="cards[i]" [mode]="votes[i]!=0"></app-scroll-card>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ this.cards[i] }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-actions *ngIf="this.votes[i]!=0">
+                        <div class="container">
+                            <span class="left-span">
+                                <button (click)="unvote(i)" mat-icon-button  color="primary" aria-label="Star icon-button">
+                                    <mat-icon class="icon-small">star</mat-icon>
+                            </button>
+                            <span class="vertical">Change your rating</span>
+                            </span>
+                            <span class="right-span">
+                                <button mat-icon-button  color="primary" aria-label="Person icon-button">
+                                    <mat-icon class="icon-small">emoji_people</mat-icon>
+                                </button>
+                                <span class="vertical">Volunteer to help your classmates</span>
+                            </span>
+                        </div>
+                    </mat-card-actions>
+                    <mat-card-actions *ngIf="this.votes[i]==0">        
+                        <mat-slider 
+                            (input)="prop(i,$event)"
+                            class="card-slider"
+                            max="10"
+                            min="1"
+                            thumbLabel
+                            color="primary"
+                        ></mat-slider>
+                        <button (click)="vote(i)" class="vote-button" mat-raised-button color="primary"> Vote </button>
+                    </mat-card-actions>
+                </mat-card>
             </ng-container>
         </tr>
     </ng-container>
