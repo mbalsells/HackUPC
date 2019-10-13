@@ -223,10 +223,10 @@ func performset_feedback(u user, pointsstring string, subject_name string) {
 		_subj := map_subjects[x]
 		//fmt.Println("subj, ", _subj)
 		if _subj.schedule[today].start_time.hour > 0 {
-			u.feedback[i] = points
 			//fmt.Println("now u , ", u)
 
 			if x == subject_name {
+				u.feedback[i] = points
 				for j, y := range map_subjects {
 					if y.name == subject_name {
 						temp := map_subjects[j]
