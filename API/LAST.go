@@ -206,7 +206,7 @@ func NewUser(username, name, email string, subjects []string) user {
 		_zeroes = append(_zeroes, 0)
 	}
 
-	u := user{username, name, email, subjects, _zeroes}
+	u := user{username, email, name, subjects, _zeroes}
 	return u
 }
 
