@@ -2,6 +2,7 @@
   position: absolute;
   top: 20%;
   left: 10%;
+  margin-top: 30px;
   width: 30%;
 }
 
@@ -9,6 +10,7 @@
   position: absolute;
   top: 20%;
   left: 55%;
+  margin-top: 30px;
   width: 30%;
 }
 
@@ -21,4 +23,10 @@
 .spacer {
   display: flex;
   justify-content: space-between;
+}
+
+h1 {
+  color: primary;
+  text-align:center;
+  margin-top:20px;
 }
