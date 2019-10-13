@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ this.lesson }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions *ngIf="mode">
+        <div class="container">
+            <span class="left-span">
+                <button mat-icon-button  color="primary" aria-label="Star icon-button">
+                    <mat-icon class="icon-small">star</mat-icon>
+            </button>
+            <span class="vertical">Change your rating</span>
+            </span>
+            <span class="right-span">
+                <button mat-icon-button  color="primary" aria-label="Person icon-button">
+                    <mat-icon class="icon-small">emoji_people</mat-icon>
+                </button>
+                <span class="vertical">Volunteer to help your classmates</span>
+            </span>
+        </div>
+    </mat-card-actions>
+    <mat-card-actions *ngIf="!mode">        
+        <mat-slider 
+            class="card-slider"
+            max="10"
+            min="1"
+            thumbLabel
+            color="primary"
+        ></mat-slider>
+        <button class="vote-button" mat-raised-button color="primary"> Vote </button>
+    </mat-card-actions>
+</mat-card>

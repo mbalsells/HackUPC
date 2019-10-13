@@ -1,0 +1,26 @@
+<mat-card class="card-login-box">
+    <mat-card-content>
+        <form class="form-login-box" [formGroup]="loginInfo">
+            <table class="full-width" cellspacing="0">
+                <tr>
+                <td>
+                    <mat-form-field class="full-width" [hideRequiredMarker]="true">
+                    <input matInput placeholder="Username" formControlName="username" required>
+                    </mat-form-field>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                    <mat-form-field class="full-width" [hideRequiredMarker]="true">
+                    <input matInput placeholder="Password" formControlName="password" type="password" required>
+                    </mat-form-field>
+                </td>
+                </tr>
+            </table>
+        </form>
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions class="buttons">
+        <button mat-raised-button (click)="login()" color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>

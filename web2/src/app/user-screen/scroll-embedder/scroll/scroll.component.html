@@ -1,0 +1,21 @@
+<table style="width:100%">
+    <tr>
+        <button [disabled]="it <= 0" (click)="expandLess()" mat-icon-button position="center" aria-label="Expand less icon-button">
+            <mat-icon>expand_less</mat-icon>
+        </button>
+    </tr>
+    
+    <ng-container *ngFor="let i of ITER;">
+        <tr>
+            <ng-container *ngIf="it <= i && i < it+3">
+                <app-scroll-card [lesson]="cards[i]" [mode]="votes[i]!=0"></app-scroll-card>
+            </ng-container>
+        </tr>
+    </ng-container>
+
+    <tr>
+      <button [disabled]="it+3 >= n"(click)="expandMore()" mat-icon-button position="center" aria-label="Expand more icon-button">
+          <mat-icon>expand_more</mat-icon>
+      </button>
+    </tr>
+</table>

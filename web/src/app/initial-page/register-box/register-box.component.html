@@ -1,0 +1,57 @@
+<mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="nameGroup">
+        <form [formGroup]="nameGroup">
+        <ng-template matStepLabel>Fill out your full name.</ng-template>
+        <mat-form-field [hideRequiredMarker]="true">
+            <input matInput placeholder="Name and surname" formControlName="name" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="emailGroup">
+        <form [formGroup]="emailGroup">
+        <ng-template matStepLabel>Fill out your email.</ng-template>
+        <mat-form-field [hideRequiredMarker]="true">
+            <input matInput placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="usernameGroup">
+        <form [formGroup]="usernameGroup">
+        <ng-template matStepLabel>Input your desired username.</ng-template>
+        <mat-form-field [hideRequiredMarker]="true">
+            <input matInput placeholder="Username" formControlName="username" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="passwordGroup">
+        <form [formGroup]="passwordGroup">
+        <ng-template matStepLabel>Input your desired password.</ng-template>
+        <mat-form-field [hideRequiredMarker]="true">
+            <input matInput placeholder="Password" formControlName="password" type="password" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Register!</ng-template>
+        
+        <div>
+            <button  mat-raised-button (click)="register()"  color="primary">Register</button>
+            <button mat-button matStepperPrevious>Back</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>

@@ -1,0 +1,38 @@
+.vertical {
+  vertical-align: middle;
+}
+
+
+/*
+.bottom-card {
+  width: 30%;
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+*/
+
+.icon {
+  padding: 0 14px;
+}
+
+.icon-small {
+  padding: 0 8px;
+}
+
+.mat-icon-button {
+  &[position='right'] {
+      position: relative;
+      left: 30%;
+  }
+  &[position='left'] {
+      position: relative;
+      left: 3%;
+  }
+  &[position='center'] {
+      position: relative;
+      left: 50%;
+  }
+}
