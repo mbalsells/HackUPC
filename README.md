@@ -16,6 +16,8 @@ For the API, we have created six HTTP endpoints, namely:
 5. SetFeedback: informs the database that the user has sent a vote for a class.
 6. Average: returs the personal and global averages of the score of a subject.
 
+By default the backend runs in the local port 8080 and the front end runs in 4200. 
+
 ## Authors
 
 - Max Balsells - [mbalsells](https://github.com/mbalsells)
@@ -25,4 +27,4 @@ For the API, we have created six HTTP endpoints, namely:
 
 ## Discover more 
 
-You can find more details of our project in HackUPC 2019 Devpost :)
+You can find many more details about our project at [HackUPC 2019 Devpost](https://www.devpost.com/software/grasp-an-educatin-solution) :)
