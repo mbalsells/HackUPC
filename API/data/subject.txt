@@ -24,4 +24,11 @@ MAG
 Pere Pascual
 PM
 Francisco Heredia
-
+Algorithms
+Albert Oliveras
+Electronics
+Olga Munoz
+Databases
+Antonio Urpí
+Statistics
+Oriol Serra
